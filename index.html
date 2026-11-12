@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Papagari Sumanth Reddy — AI Engineer (RAG, Agents, Optimization)</title>
+<meta name="description" content="Portfolio of Papagari Sumanth Reddy, AI engineer from IIT Hyderabad. Production LLM agents, hybrid RAG pipelines, Gurobi optimization and edge AI, with measured results.">
+<meta property="og:title" content="Papagari Sumanth Reddy — AI Engineer">
+<meta property="og:description" content="Production LLM agents, hybrid RAG, Gurobi optimization and edge AI. M.Tech, IIT Hyderabad.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230B6E4F'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='17' fill='white'%3ESR%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3F5F7; --paper-2:#E9EDF1; --ink:#0B1220; --muted:#55606E; --rule:#C8D0D9;
+  --accent:#0B6E4F; --accent-ink:#07513A; --on-accent:#FFFFFF; --amber:#E39B12; --amber-soft:#FBEFD2;
+  --display:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1117; --paper-2:#131A22; --ink:#E8ECF1; --muted:#9AA5B4; --rule:#2A3441;
+    --accent:#4FC89A; --accent-ink:#7FDCB7; --on-accent:#07261B; --amber:#F2BA45; --amber-soft:#3A2E12; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1117; --paper-2:#131A22; --ink:#E8ECF1; --muted:#9AA5B4; --rule:#2A3441;
+  --accent:#4FC89A; --accent-ink:#7FDCB7; --on-accent:#07261B; --amber:#F2BA45; --amber-soft:#3A2E12; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth; scroll-padding-top:calc(env(safe-area-inset-top,0px) + 1rem)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased}
+a{color:var(--accent-ink); text-decoration-color:color-mix(in srgb,var(--accent) 45%,transparent); text-underline-offset:3px}
+a:hover{text-decoration-color:var(--accent)}
+:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
+h1,h2,h3,h4{font-family:var(--display); margin:0; line-height:1.1; letter-spacing:-0.01em}
+p{margin:0 0 1em}
+strong{font-weight:600}
+.skip{position:absolute; left:-999px; top:0; background:var(--ink); color:var(--paper); padding:.5rem 1rem}
+.skip:focus{left:1rem; top:1rem; z-index:50}
+
+/* layout: rail + page */
+.frame{display:grid; grid-template-columns:290px minmax(0,1fr); gap:0; max-width:1240px; margin:0 auto; padding:0 1.5rem}
+.rail{position:sticky; top:0; align-self:start; height:100vh; padding:2.25rem 2rem 2rem 0; border-right:1px solid var(--rule); display:flex; flex-direction:column; gap:1.75rem}
+.rail .who{display:flex; gap:.9rem; align-items:center}
+.rail img{width:56px; height:70px; object-fit:cover; object-position:top; border-radius:3px; border:1px solid var(--rule)}
+.rail .name{font-family:var(--display); font-weight:700; font-size:1.05rem; line-height:1.2; font-variation-settings:"wdth" 100}
+.rail .role{font-size:.9rem; color:var(--muted); line-height:1.35; margin-top:.2rem}
+.rail nav{display:flex; flex-direction:column; gap:.1rem}
+.rail nav a{font-family:var(--display); font-size:.95rem; text-decoration:none; color:var(--muted); padding:.35rem 0 .35rem .9rem; border-left:2px solid transparent; transition:color .15s,border-color .15s}
+.rail nav a:hover{color:var(--ink)}
+.rail nav a[aria-current="true"]{color:var(--ink); border-left-color:var(--accent)}
+.rail .links{margin-top:auto; font-size:.9rem; display:flex; flex-direction:column; gap:.35rem}
+.rail .links a{text-decoration:none; color:var(--ink)}
+.rail .links a:hover{color:var(--accent-ink)}
+.rail .links a.resume,.rail .resume{display:inline-flex; align-items:center; gap:.5rem; font-family:var(--display); font-weight:600; font-size:.92rem; color:var(--paper); background:var(--ink); padding:.6rem .9rem; border-radius:4px; text-decoration:none; width:fit-content}
+.rail .links a.resume:hover{background:var(--accent); color:var(--on-accent)}
+.rail .status{font-size:.85rem; color:var(--muted); display:flex; align-items:center; gap:.5rem}
+.rail .status::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.page{padding:0 0 4rem 3rem; min-width:0}
+section{padding:3.5rem 0 1rem; border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0; padding-top:2.5rem}
+.sec-head{display:grid; grid-template-columns:1fr auto; align-items:end; gap:1rem; margin-bottom:1.75rem}
+.sec-head h2{font-size:1.9rem; font-weight:700; font-variation-settings:"wdth" 108}
+.sec-head .note{font-size:.95rem; color:var(--muted); max-width:34ch; text-align:right; line-height:1.35}
+h3{font-size:1.2rem; font-weight:700}
+
+/* hero */
+.hero h1{font-size:clamp(2.1rem,4.4vw,3.4rem); font-weight:700; font-variation-settings:"wdth" 112; max-width:16ch; letter-spacing:-0.02em}
+.hero .lede{font-size:1.2rem; max-width:52ch; margin:1.4rem 0 1.2rem}
+.hero .cta{display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap; font-family:var(--display); font-size:.98rem}
+.hero .cta .primary{background:var(--accent); color:var(--on-accent); padding:.7rem 1.1rem; border-radius:4px; text-decoration:none; font-weight:600}
+.hero .cta .primary:hover{filter:brightness(.92)}
+.schematic{margin:2.75rem 0 0; border:1px solid var(--rule); border-radius:6px; background:var(--paper-2); padding:1.25rem 1.25rem .9rem}
+.schematic .scroll{overflow-x:auto}
+.schematic svg{width:100%; min-width:720px; height:auto; display:block}
+.schematic .cap{font-size:.88rem; color:var(--muted); margin:.6rem 0 0; display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+.schematic .node rect{fill:var(--paper); stroke:var(--ink); stroke-width:1.2}
+.schematic .node.live rect{stroke:var(--accent); stroke-width:1.6}
+.schematic .node text{font-family:var(--display); font-size:12.5px; fill:var(--ink); font-weight:600}
+.schematic .node .sub{font-family:var(--serif); font-size:11px; fill:var(--muted); font-weight:400}
+.schematic .wire{fill:none; stroke:var(--ink); stroke-width:1.2; stroke-dasharray:600; stroke-dashoffset:600; animation:draw 1.1s ease-out forwards}
+.schematic .wire.w2{animation-delay:.25s}.schematic .wire.w3{animation-delay:.5s}.schematic .wire.w4{animation-delay:.75s}.schematic .wire.w5{animation-delay:1s}.schematic .wire.w6{animation-delay:1.2s}
+.schematic .node{opacity:0; animation:appear .4s ease-out forwards}
+.schematic .n1{animation-delay:0s}.schematic .n2{animation-delay:.3s}.schematic .n3{animation-delay:.55s}.schematic .n4{animation-delay:.8s}.schematic .n5{animation-delay:1.05s}.schematic .n6{animation-delay:1.3s}.schematic .n7{animation-delay:1.3s}
+.schematic .pulse{fill:var(--amber); opacity:0; animation:appear .4s 1.6s ease-out forwards}
+.schematic .lbl{font-family:var(--serif); font-size:11px; fill:var(--muted); font-style:italic}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes appear{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.schematic .wire,.schematic .node,.schematic .pulse{animation:none; opacity:1; stroke-dashoffset:0}}
+
+/* ledger of results */
+.ledger{display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--rule); border-radius:6px; overflow:hidden; margin-top:2rem}
+.ledger div{padding:1rem 1.1rem; border-left:1px solid var(--rule); background:var(--paper)}
+.ledger div:first-child{border-left:0}
+.ledger b{display:block; font-family:var(--display); font-size:1.75rem; font-weight:700; font-variation-settings:"wdth" 105; letter-spacing:-0.02em; line-height:1}
+.ledger small{display:block; font-size:.86rem; color:var(--muted); margin-top:.4rem; line-height:1.3}
+
+/* featured work */
+.work{display:grid; grid-template-columns:150px minmax(0,1fr); gap:1.5rem; padding:1.6rem 0; border-top:1px dashed var(--rule)}
+.work:first-of-type{border-top:0; padding-top:0}
+.work .meta{font-size:.9rem; color:var(--muted); line-height:1.45}
+.work .meta b{display:block; color:var(--ink); font-weight:600}
+.work .meta .live{color:var(--accent-ink); font-family:var(--display); font-size:.82rem; font-weight:600; display:flex; width:fit-content; align-items:center; gap:.4rem; margin-top:.5rem}
+.work .meta .live::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--accent)}
+.work h3{font-size:1.35rem; margin-bottom:.45rem}
+.work .sum{font-size:1.02rem}
+.work ul{margin:.4rem 0 .8rem; padding-left:1.1rem}
+.work li{margin:.25rem 0}
+.work .stack{font-family:var(--display); font-size:.84rem; color:var(--muted); line-height:1.7}
+.work .stack span{border:1px solid var(--rule); border-radius:3px; padding:.05rem .45rem; margin-right:.35rem; white-space:nowrap; display:inline-block}
+.bench{margin:.9rem 0 1rem; max-width:420px}
+.bench .row{display:grid; grid-template-columns:62px 1fr 56px; align-items:center; gap:.6rem; font-family:var(--display); font-size:.85rem; margin:.3rem 0}
+.bench .bar{height:12px; background:var(--paper-2); border-radius:2px; overflow:hidden}
+.bench .bar i{display:block; height:100%; background:var(--accent); border-radius:2px}
+.bench .row.best .bar i{background:var(--amber)}
+.bench .row em{font-style:normal; text-align:right; font-weight:600}
+.bench .cap{font-size:.82rem; color:var(--muted); margin:.5rem 0 0}
+
+/* project ledger table */
+.projects{width:100%; border-collapse:collapse; font-size:.98rem}
+.projects th{text-align:left; font-family:var(--display); font-weight:600; font-size:.82rem; color:var(--muted); padding:0 .75rem .5rem 0; border-bottom:1px solid var(--ink)}
+.projects td{padding:.9rem .75rem .9rem 0; border-bottom:1px solid var(--rule); vertical-align:top}
+.projects td.n{width:27%}
+.projects td.n b{font-family:var(--display); font-weight:700; display:block; line-height:1.25}
+.projects td.n small{display:block; color:var(--muted); font-size:.84rem; margin-top:.2rem}
+.projects td.s{width:22%; font-family:var(--display); font-size:.82rem; color:var(--muted); line-height:1.5}
+.projects td.l{width:70px; white-space:nowrap; text-align:right; padding-right:0}
+.projects td.l a{font-family:var(--display); font-size:.85rem; font-weight:600}
+.ghnote{font-size:.9rem; color:var(--muted); margin-top:.8rem}
+
+/* research list */
+.research{display:grid; grid-template-columns:1fr 1fr; gap:1.5rem 2.5rem}
+.research article{border-top:2px solid var(--ink); padding-top:.75rem}
+.research h3{font-size:1.08rem; margin-bottom:.35rem}
+.research .meta{font-size:.86rem; color:var(--muted); margin-bottom:.4rem}
+.research p{font-size:.96rem; margin:0}
+.research .out{font-family:var(--display); font-size:.88rem; font-weight:600; color:var(--accent-ink); margin-top:.4rem; display:block}
+
+/* timeline */
+.timeline{list-style:none; margin:0; padding:0}
+.timeline li{display:grid; grid-template-columns:150px minmax(0,1fr); gap:1.5rem; padding:1.1rem 0; border-top:1px dashed var(--rule)}
+.timeline li:first-child{border-top:0; padding-top:0}
+.timeline .when{font-family:var(--display); font-size:.9rem; color:var(--muted); padding-top:.15rem}
+.timeline h3{font-size:1.1rem}
+.timeline .org{color:var(--muted); font-size:.95rem}
+.timeline p{margin:.4rem 0 0; font-size:.96rem}
+.timeline ul{margin:.4rem 0 0; padding-left:1.1rem; font-size:.96rem}
+
+/* skills */
+.skills{display:grid; grid-template-columns:170px minmax(0,1fr); row-gap:.9rem; column-gap:1.5rem; font-size:.98rem}
+.skills dt{font-family:var(--display); font-weight:600; font-size:.92rem; color:var(--muted); padding-top:.1rem}
+.skills dd{margin:0}
+.skills dd b{font-weight:600}
+
+/* beyond */
+.beyond{display:grid; grid-template-columns:1fr 1fr; gap:1.5rem 2.5rem}
+.beyond h3{font-size:1.05rem; margin-bottom:.4rem}
+.beyond ul{margin:0; padding-left:1.1rem; font-size:.96rem}
+.beyond li{margin:.3rem 0}
+
+/* contact */
+.contact{background:var(--ink); color:var(--paper); border-radius:6px; padding:2rem 2rem 1.75rem; margin-top:1rem}
+.contact h2{font-size:1.8rem; font-variation-settings:"wdth" 108; max-width:22ch}
+.contact p{max-width:54ch; opacity:.85; margin:.8rem 0 1.3rem}
+.contact .row{display:flex; gap:1.6rem; flex-wrap:wrap; font-family:var(--display); font-size:.95rem}
+.contact a{color:var(--paper); text-decoration-color:color-mix(in srgb,var(--paper) 40%,transparent)}
+.contact .mail{background:var(--paper); color:var(--ink); padding:.6rem 1rem; border-radius:4px; text-decoration:none; font-weight:600}
+.contact .mail:hover{background:var(--amber); color:#1A1206}
+footer{font-size:.85rem; color:var(--muted); padding:2rem 0 0; display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap}
+
+/* topbar for small screens */
+.topbar{display:none}
+@media (max-width:900px){
+  .frame{grid-template-columns:1fr; padding:0 1.1rem}
+  .rail{position:static; height:auto; border-right:0; border-bottom:1px solid var(--rule); padding:1.5rem 0 1.25rem; gap:1rem}
+  .rail nav{display:none}
+  .rail .links{margin-top:0; flex-direction:row; flex-wrap:wrap; gap:.4rem 1.2rem}
+  .page{padding-left:0}
+  .topbar{display:flex; position:sticky; top:env(safe-area-inset-top,0px); z-index:20; background:color-mix(in srgb,var(--paper) 92%,transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--rule); margin:0 -1.1rem; padding:.55rem 1.1rem; gap:1rem; overflow-x:auto; scrollbar-width:none}
+  body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:30; background:var(--paper)}
+  .topbar a{font-family:var(--display); font-size:.9rem; color:var(--muted); text-decoration:none; white-space:nowrap}
+  .topbar a[aria-current="true"]{color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:6px}
+  .sec-head{grid-template-columns:1fr}
+  .sec-head .note{text-align:left; max-width:none}
+  .ledger{grid-template-columns:1fr 1fr}
+  .ledger div:nth-child(3){border-left:0}
+  .ledger div:nth-child(n+3){border-top:1px solid var(--rule)}
+  .work,.timeline li,.skills{grid-template-columns:1fr; gap:.4rem}
+  .skills{row-gap:.2rem}
+  .skills dd{margin-bottom:.7rem}
+  .research,.beyond{grid-template-columns:1fr}
+  .projects thead{display:none}
+  .projects tr{display:grid; grid-template-columns:1fr auto; border-bottom:1px solid var(--rule); padding:.8rem 0}
+  .projects td{border:0; padding:.15rem 0; width:auto !important}
+  .projects td.n{grid-column:1}.projects td.l{grid-column:2; grid-row:1; text-align:right}
+  .projects td.d,.projects td.s{grid-column:1 / -1}
+  .contact{padding:1.5rem 1.25rem}
+}
+@media (max-width:520px){ .hero h1{max-width:none} .ledger b{font-size:1.5rem} }
+</style>
+</head>
+<body>
+<a class="skip" href="#work">Skip to content</a>
+<div class="frame">
+
+<aside class="rail">
+  <div class="who">
+    <img src="portrait.jpg" alt="Portrait of Papagari Sumanth Reddy" width="56" height="70">
+    <div>
+      <div class="name">Papagari Sumanth Reddy</div>
+      <div class="role">AI Engineer · RAG, agents, optimization<br>M.Tech, IIT Hyderabad</div>
+    </div>
+  </div>
+  <nav aria-label="Sections">
+    <a href="#top" aria-current="true">Overview</a>
+    <a href="#work">Featured work</a>
+    <a href="#projects">RAG &amp; agent projects</a>
+    <a href="#research">Research</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#beyond">Beyond code</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="status">Open to AI / GenAI / backend roles</div>
+  <div class="links">
+    <a class="resume" href="Sumanth_Reddy_Resume.pdf" download>Download résumé (PDF)</a>
+    <a href="mailto:sumanth9975@gmail.com">sumanth9975@gmail.com</a>
+    <a href="https://github.com/sumanth-reddy75" target="_blank" rel="noopener">github.com/sumanth-reddy75</a>
+    <a href="https://www.linkedin.com/in/sumanth-reddy75/" target="_blank" rel="noopener">linkedin.com/in/sumanth-reddy75</a>
+  </div>
+</aside>
+
+<main class="page" id="top">
+  <nav class="topbar" aria-label="Sections (mobile)">
+    <a href="#top" aria-current="true">Overview</a><a href="#work">Work</a><a href="#projects">Projects</a><a href="#research">Research</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+  </nav>
+
+  <section class="hero" aria-labelledby="hero-h">
+    <h1 id="hero-h">I build AI systems that have to hold up in production.</h1>
+    <p class="lede">Production LLM agents, hybrid retrieval pipelines, Gurobi optimization engines and on-device inference, each measured against a real constraint: a market gate-closure, an ISO template, a child's phone with no network.</p>
+    <div class="cta">
+      <a class="primary" href="#work">See the work</a>
+      <a href="Sumanth_Reddy_Resume.pdf" download>Résumé (PDF)</a>
+      <a href="mailto:sumanth9975@gmail.com">Email me</a>
+    </div>
+
+    <figure class="schematic" aria-label="Schematic of the systems described on this page">
+      <div class="scroll"><svg viewBox="0 0 860 212" role="img" aria-labelledby="sch-t">
+        <title id="sch-t">Document and query pipeline: ingestion, hybrid retrieval, LLM serving, agent tools, delivered as authenticated microservices; and a parallel optimization track feeding the same deployment.</title>
+        <path class="wire w1" d="M130 70 H170"/>
+        <path class="wire w2" d="M320 70 H360"/>
+        <path class="wire w3" d="M540 70 H580"/>
+        <path class="wire w4" d="M660 96 V115"/>
+        <path class="wire w5" d="M130 158 H560 V141 H580"/>
+        <path class="wire w6" d="M740 141 H770"/>
+        <g class="node n1"><rect x="10" y="44" width="120" height="52" rx="4"/><text x="70" y="66" text-anchor="middle">Ingest</text><text class="sub" x="70" y="83" text-anchor="middle">PDF, Word, CSV, OCR</text></g>
+        <g class="node n2"><rect x="170" y="44" width="150" height="52" rx="4"/><text x="245" y="66" text-anchor="middle">Hybrid retrieval</text><text class="sub" x="245" y="83" text-anchor="middle">BM25 + dense, RRF, rerank</text></g>
+        <g class="node n3 live"><rect x="360" y="44" width="180" height="52" rx="4"/><text x="450" y="66" text-anchor="middle">LLM serving</text><text class="sub" x="450" y="83" text-anchor="middle">vLLM Qwen, Bedrock, Gemma 2B</text></g>
+        <g class="node n4"><rect x="580" y="44" width="160" height="52" rx="4"/><text x="660" y="66" text-anchor="middle">Agent &amp; tools</text><text class="sub" x="660" y="83" text-anchor="middle">LangGraph, MCP, web search</text></g>
+        <g class="node n5"><rect x="10" y="132" width="120" height="52" rx="4"/><text x="70" y="154" text-anchor="middle">Optimize</text><text class="sub" x="70" y="171" text-anchor="middle">Gurobi MILP, Ray</text></g>
+        <g class="node n6 live"><rect x="580" y="115" width="160" height="52" rx="4"/><text x="660" y="137" text-anchor="middle">Serve</text><text class="sub" x="660" y="154" text-anchor="middle">FastAPI, SSE, Keycloak, Docker</text></g>
+        <g class="node n7"><rect x="770" y="115" width="82" height="52" rx="4"/><text x="811" y="137" text-anchor="middle">Users</text><text class="sub" x="811" y="154" text-anchor="middle">web, Android</text></g>
+        <circle class="pulse" cx="755" cy="141" r="4"/>
+        <text class="lbl" x="245" y="118" text-anchor="middle">pgvector, Qdrant, Pinecone, sqlite-vec</text>
+        <text class="lbl" x="70" y="204" text-anchor="middle">warm starts, 96 time blocks</text>
+      </svg></div>
+      <figcaption class="cap"><span>Green outline: components I have run in production or on-device.</span><span>Every box maps to a project below.</span></figcaption>
+    </figure>
+
+    <div class="ledger" role="list" aria-label="Measured results">
+      <div role="listitem"><b>71.3%</b><small>best-case cut in Day-Ahead Market solver runtime, Greenko Group</small></div>
+      <div role="listitem"><b>Live</b><small>LLM document agent in production for Greenko's IMS unit, with SSO</small></div>
+      <div role="listitem"><b>&lt;450 ms</b><small>end-to-end latency, fully offline LLM mentor on Android</small></div>
+      <div role="listitem"><b>Top 5%</b><small>GATE 2024 CS/IT, of 123,000+ candidates; M.Tech CGPA 8.73</small></div>
+    </div>
+  </section>
+
+  <section id="work" aria-labelledby="work-h">
+    <div class="sec-head"><h2 id="work-h">Featured work</h2><p class="note">Three systems, each with a number that was hard to earn.</p></div>
+
+    <article class="work">
+      <div class="meta"><b>Greenko Group</b>May – Jun 2026<br>Gen AI team<span class="live">In production</span></div>
+      <div>
+        <h3>GIMS AI Agent: ISO documentation that rewrites itself</h3>
+        <p class="sum">Greenko's IMS procedure documents follow a strict ISO template: swimlane flowcharts, standards references, KPI tables, document-control metadata. Every revision was rebuilt by hand. I built the first in-house tool that restructures a procedure and generates native, editable Word flowcharts inside it, with no outsourcing.</p>
+        <ul>
+          <li>Five specialised pipelines: full restructuring on AWS Bedrock (Claude), native Word DrawingML flowchart generation, prompt-driven generation streamed over SSE, an agentic chat assistant on self-hosted vLLM (Qwen) with web search for standards, and dual-mode template/input generation.</li>
+          <li>Dockerised React + TypeScript multi-session interface with streaming responses, drag-and-drop uploads and job-status tracking.</li>
+          <li>Production hardening: nginx reverse proxy, Keycloak OIDC SSO, per-user allowlisting, file validation, fail-fast config checks.</li>
+          <li>Now live for the Company Secretarial / IMS unit and architected to extend department-wide.</li>
+        </ul>
+        <p class="stack"><span>FastAPI</span><span>vLLM (Qwen)</span><span>AWS Bedrock</span><span>pgvector</span><span>React + TypeScript</span><span>Keycloak</span><span>Docker + nginx</span><span>Word DrawingML</span></p>
+      </div>
+    </article>
+
+    <article class="work">
+      <div class="meta"><b>Greenko Group</b>Jan – May 2026<br>Operations Research team</div>
+      <div>
+        <h3>Warm-start optimization for the Day-Ahead Market solver</h3>
+        <p class="sum">The energy-market solver rebuilt its MILP from scratch every day even though the problem barely changed. I designed and benchmarked two warm-start strategies, reusing yesterday's solution (D-1) and last week's same-weekday solution (D-7), feeding prior solver states in as an MIP start across 96 time blocks.</p>
+        <div class="bench" aria-label="Runtime reduction versus cold start, best four of eight benchmark cases">
+          <div class="row best"><span>Test 3</span><div class="bar"><i style="width:71.3%"></i></div><em>71.3%</em></div>
+          <div class="row"><span>Test 1</span><div class="bar"><i style="width:70.9%"></i></div><em>70.9%</em></div>
+          <div class="row"><span>Test 8</span><div class="bar"><i style="width:67.2%"></i></div><em>67.2%</em></div>
+          <div class="row"><span>Test 7</span><div class="bar"><i style="width:49.9%"></i></div><em>49.9%</em></div>
+          <p class="cap">Runtime reduction vs. a cold start, four of eight benchmarked cases. D-1 warm start won in 75% of cases; 40–50% speed-up on average.</p>
+        </div>
+        <ul>
+          <li>The hard part was the failure mode: warm starts silently broke when a contract changed the problem's structure even though every variable bound still checked out. I traced it to a constraint the old solution never accounted for and built the safeguard: validate first, fall back to cold start on any doubt.</li>
+          <li>MinIO persistence for solver states, Ray for parallel benchmarking, automated tests over the eight cases.</li>
+        </ul>
+        <p class="stack"><span>Gurobi</span><span>MILP</span><span>Python</span><span>Ray</span><span>MinIO</span></p>
+      </div>
+    </article>
+
+    <article class="work">
+      <div class="meta"><b>M.Tech thesis</b>May 2025 – May 2026<br>IIT Hyderabad<span class="live">Runs fully offline</span></div>
+      <div>
+        <h3>KathaMitra: an AI storytelling mentor that never leaves the phone</h3>
+        <p class="sum">An Android app for 9–12-year-olds that turns screen time into Socratic reflection: narrated stories from Indian epics, then open-ended questions the child answers out loud. Inference, retrieval, speech-to-text and text-to-speech all run on-device, which is what makes it DPDP Act 2023 compliant by construction.</p>
+        <ul>
+          <li>Quantized Gemma 2B on MediaPipe / LiteRT with a local sqlite-vec index; end-to-end response under 450 ms, a 60% reduction from the first build.</li>
+          <li>A "Symmetric Context" retrieval step pulls clean English narrative concepts from code-switched Hindi-English speech before querying the index, then fuses them back with the child's own words so answers stay in their voice and grounded in verified stories.</li>
+          <li>Scored 4.80 / 5.0 in pedagogical evaluation; design-thinking research and focus groups with children informed the interaction model.</li>
+        </ul>
+        <p class="stack"><span>Gemma 2B (quantized)</span><span>MediaPipe / LiteRT</span><span>sqlite-vec</span><span>Android</span><span>On-device STT / TTS</span></p>
+      </div>
+    </article>
+  </section>
+
+  <section id="projects" aria-labelledby="proj-h">
+    <div class="sec-head"><h2 id="proj-h">RAG &amp; agent projects</h2><p class="note">Built end to end during a four-month production-RAG intensive, alongside the Greenko work.</p></div>
+    <table class="projects">
+      <thead><tr><th>Project</th><th>What it does</th><th>Stack</th><th></th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="n"><b>Multi-Source RAG + Text-to-SQL Copilot</b><small>18 endpoints, serverless on AWS</small></td>
+          <td class="d">Routes each question to document RAG, Text-to-SQL (Vanna, with an approval step and SQL safety checks) or a hybrid of both. Two-level caching, a Redis query cache and a SHA-256 document cache on S3, is designed to cut repeat-query LLM cost by 40–60%. Deployed on AWS Lambda (ARM64) through Docker, ECR and GitHub Actions, with Opik tracing and RAGAS evaluation.</td>
+          <td class="s">FastAPI, Pinecone, PostgreSQL, Redis, Docling, AWS Lambda</td>
+          <td class="l"><a href="https://github.com/sumanth-reddy75/M-S-qualitycontrol-copilot" target="_blank" rel="noopener">GitHub</a></td>
+        </tr>
+        <tr>
+          <td class="n"><b>Corrective + Self-Reflective RAG</b><small>Hybrid search with grounding loop</small></td>
+          <td class="d">True hybrid search in Qdrant (dense and BM25 sparse vectors fused with reciprocal rank fusion) with optional HyDE and reranking. CRAG mode grades retrieved context and falls back to web search when it is irrelevant; self-reflective mode checks the answer is grounded and refines the query until it is. Deployed to AWS Elastic Beanstalk.</td>
+          <td class="s">FastAPI, Qdrant, OpenAI, Tavily, Docling, AWS Elastic Beanstalk</td>
+          <td class="l"><a href="https://github.com/sumanth-reddy75" target="_blank" rel="noopener">GitHub</a></td>
+        </tr>
+        <tr>
+          <td class="n"><b>Multimodal RAG document pipeline</b><small>PDF to answer, cloud or fully local</small></td>
+          <td class="d">Layout detection across 23 element types, OCR for tables and LaTeX formulas, GPT-4o captions that make figures searchable, structure-aware chunking, hybrid Qdrant retrieval and four pluggable rerankers (OpenAI, Jina, BGE, Qwen VL). Runs against a cloud API or entirely on Ollama with no GPU.</td>
+          <td class="s">GLM-OCR, PP-DocLayout, GPT-4o, Qdrant, FastAPI, Ollama</td>
+          <td class="l"><a href="https://github.com/sumanth-reddy75" target="_blank" rel="noopener">GitHub</a></td>
+        </tr>
+        <tr>
+          <td class="n"><b>Production RAG Q&amp;A service</b><small>Evaluated, traced, tested</small></td>
+          <td class="d">Async streaming document Q&amp;A with source attribution, RAGAS faithfulness and relevancy scoring on every answer, LangSmith tracing, 70%+ test coverage and a GitHub Actions pipeline that builds a Docker image, pushes to ECR and deploys to AWS App Runner.</td>
+          <td class="s">FastAPI, LangChain, Qdrant Cloud, LangSmith, RAGAS, AWS App Runner</td>
+          <td class="l"><a href="https://github.com/sumanth-reddy75" target="_blank" rel="noopener">GitHub</a></td>
+        </tr>
+        <tr>
+          <td class="n"><b>MCP-powered code review assistant</b><small>Agentic bug detection and repair</small></td>
+          <td class="d">An agent that uses Model Context Protocol tools to read a repository, locate likely bugs and propose fixes, orchestrated with LangChain and shipped in Docker.</td>
+          <td class="s">LangChain, MCP, Docker</td>
+          <td class="l"><a href="https://github.com/sumanth-reddy75" target="_blank" rel="noopener">GitHub</a></td>
+        </tr>
+        <tr>
+          <td class="n"><b>Hybrid search RAG on Kubernetes</b><small>Hierarchical chunking, EKS</small></td>
+          <td class="d">Sparse BM25 keyword search combined with dense embeddings and hierarchical chunking, served as microservices orchestrated on Kubernetes (AWS EKS).</td>
+          <td class="s">BM25, Kubernetes, AWS EKS</td>
+          <td class="l"><a href="https://github.com/sumanth-reddy75" target="_blank" rel="noopener">GitHub</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="ghnote">Some repositories are still being moved from local to GitHub; links go to the profile until each one is public.</p>
+  </section>
+
+  <section id="research" aria-labelledby="res-h">
+    <div class="sec-head"><h2 id="res-h">Research &amp; coursework</h2><p class="note">Graduate projects at IIT Hyderabad, 2024–2025.</p></div>
+    <div class="research">
+      <article>
+        <h3>Scientific diagram understanding and caption generation</h3>
+        <div class="meta">Deep Learning (AI5100), Aug – Nov 2024</div>
+        <p>A multimodal system that reads scientific diagrams and writes their captions, combining CLIP and Vision Transformers for visual understanding with BART for generation, fine-tuned on a 4M-image SciCap subset.</p>
+        <span class="out">73% Recall@10 on visual-text alignment</span>
+      </article>
+      <article>
+        <h3>Toxic content detection on social media</h3>
+        <div class="meta">Natural Language Processing (CS6803), Aug – Nov 2024</div>
+        <p>Binary and multi-class classifiers for automated safety screening, built by fine-tuning HateBERT on the DHate dataset for nuanced toxicity categories.</p>
+        <span class="out">Competitive macro-F1 across classes</span>
+      </article>
+      <article>
+        <h3>Supply-chain optimization for biogas production</h3>
+        <div class="meta">Operations Management (EM6040), Jan – Mar 2025</div>
+        <p>A multi-period MILP that sources and blends four waste feedstocks across four Telangana plants, maximizing yearly profit under seasonal waste variation while holding the C/N ratio between 20:1 and 35:1.</p>
+        <span class="out">Feasible feedstock plan across a full year</span>
+      </article>
+      <article>
+        <h3>Sarvam AI: building India's sovereign generative AI</h3>
+        <div class="meta">Strategic Management (EM6010), Dec 2024 – Mar 2025</div>
+        <p>A strategic study of Sarvam's voice-first multilingual approach: business model, compute trade-offs for Indic-language models, data sovereignty and the route from seed stage to enterprise deployment.</p>
+        <span class="out">Market and go-to-market analysis</span>
+      </article>
+    </div>
+  </section>
+
+  <section id="experience" aria-labelledby="exp-h">
+    <div class="sec-head"><h2 id="exp-h">Experience &amp; education</h2></div>
+    <ol class="timeline">
+      <li>
+        <div class="when">Jan – Jun 2026</div>
+        <div>
+          <h3>AI &amp; Software Engineering Intern</h3>
+          <div class="org">Greenko Group, Gen AI / Operations Research, Hyderabad</div>
+          <p>Delivered two production-oriented projects in under five months while completing the thesis in parallel.</p>
+          <ul>
+            <li>Warm-start solver proof of concept: up to 71.3% runtime reduction across eight benchmark cases, with failure root-cause analysis and automated tests.</li>
+            <li>GIMS AI Agent: five-pipeline document-automation platform, deployed to production with SSO and role-based access.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="when">Jul 2024 – May 2026</div>
+        <div>
+          <h3>M.Tech, Techno-Entrepreneurship</h3>
+          <div class="org">Indian Institute of Technology Hyderabad, CGPA 8.73 / 10</div>
+          <p>Coursework in deep learning, natural language processing, computer vision, operations management, strategic management and design thinking.</p>
+        </div>
+      </li>
+      <li>
+        <div class="when">2024</div>
+        <div>
+          <h3>GATE 2024, Computer Science &amp; IT</h3>
+          <div class="org">Ranked in the top 5% of 123,000+ candidates nationwide</div>
+        </div>
+      </li>
+      <li>
+        <div class="when">Jul 2020 – May 2024</div>
+        <div>
+          <h3>B.Tech, Computer Science and Engineering</h3>
+          <div class="org">Malla Reddy College of Engineering, Hyderabad, CGPA 7.50 / 10</div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section id="skills" aria-labelledby="sk-h">
+    <div class="sec-head"><h2 id="sk-h">Skills</h2><p class="note">Bold items are ones I have shipped with, not only studied.</p></div>
+    <dl class="skills">
+      <dt>Languages</dt><dd><b>Python</b>, C++, <b>SQL</b>, Bash, TypeScript</dd>
+      <dt>Generative AI</dt><dd><b>RAG</b>, <b>agentic systems</b>, <b>LangChain</b>, LangGraph, <b>Model Context Protocol</b>, <b>hybrid search (BM25 + dense, RRF)</b>, reranking, HyDE, Corrective RAG, Self-RAG, Text-to-SQL, prompt engineering</dd>
+      <dt>Models &amp; serving</dt><dd><b>vLLM (Qwen)</b>, <b>AWS Bedrock (Claude)</b>, OpenAI API, Ollama, <b>Gemma 2B on-device</b>, PyTorch, Hugging Face Transformers, BERT / HateBERT, CLIP, ViT, BART</dd>
+      <dt>Backend &amp; data</dt><dd><b>FastAPI</b>, REST microservices, <b>SSE streaming</b>, <b>PostgreSQL + pgvector</b>, MySQL, MongoDB, Redis, <b>Keycloak (OAuth2 / OIDC, RBAC)</b>, React</dd>
+      <dt>Vector stores</dt><dd><b>pgvector</b>, <b>Qdrant</b>, Pinecone, <b>sqlite-vec</b>, Weaviate</dd>
+      <dt>Cloud &amp; DevOps</dt><dd>AWS (<b>Lambda</b>, App Runner, Elastic Beanstalk, ECR, EKS, S3), <b>Docker</b>, Kubernetes, <b>GitHub Actions CI/CD</b>, nginx, Linux, Git</dd>
+      <dt>Evaluation &amp; OR</dt><dd>RAGAS, LangSmith, Opik, pytest, <b>Gurobi (MILP)</b>, <b>Ray</b></dd>
+    </dl>
+  </section>
+
+  <section id="beyond" aria-labelledby="by-h">
+    <div class="sec-head"><h2 id="by-h">Beyond code</h2></div>
+    <div class="beyond">
+      <div>
+        <h3>International collaborations, 2025</h3>
+        <ul>
+          <li><strong>Nagoya University, Tongali Overseas Project (Feb):</strong> refined startup business models and marketing strategy with Japanese student founders.</li>
+          <li><strong>J-StarX × IIT Hyderabad (Feb):</strong> assessed India's parental-control-app market for a Japanese child-safety startup and built the reverse market-entry pitch.</li>
+          <li><strong>Kyoto University, Deep-Tech Entrepreneur Spirits (Sep):</strong> mapped urban-sustainability challenges under SDG 11.</li>
+          <li><strong>Shimane University (Sep):</strong> presented thesis research and exchanged perspectives on applied AI.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Leadership and learning</h3>
+        <ul>
+          <li><strong>Hospitality Coordinator,</strong> SPIC MACAY IIT Hyderabad chapter and its 10th International Convention (2024–2025).</li>
+          <li><strong>Ultimate RAG intensive:</strong> four months, 16 modules, five end-to-end projects covering retrieval foundations through Graph RAG, LangGraph agents, MCP and Kubernetes deployment.</li>
+          <li><strong>Third place,</strong> International Yoga Day competition, IIT Hyderabad.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="ct-h">
+    <div class="contact">
+      <h2 id="ct-h">Building RAG, agents or LLM infrastructure? Let's talk.</h2>
+      <p>I'm looking for AI Engineer, GenAI Engineer and Backend Engineer roles in Hyderabad or remote, especially where production retrieval, agentic systems or optimization meet real infrastructure constraints.</p>
+      <div class="row">
+        <a class="mail" href="mailto:sumanth9975@gmail.com">Email sumanth9975@gmail.com</a>
+        <a href="tel:+919494987014">+91 94949 87014</a>
+        <a href="https://www.linkedin.com/in/sumanth-reddy75/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/sumanth-reddy75" target="_blank" rel="noopener">GitHub</a>
+        <a href="Sumanth_Reddy_Resume.pdf" download>Résumé</a>
+      </div>
+    </div>
+    <footer><span>© 2026 Papagari Sumanth Reddy, Hyderabad, India</span><span>Hand-built static page, no tracking.</span></footer>
+  </section>
+</main>
+</div>
+
+<script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.rail nav a, .topbar a'));
+  var ids=['top','work','projects','research','experience','skills','beyond','contact'];
+  var els=ids.map(function(id){return document.getElementById(id)}).filter(Boolean);
+  function setCurrent(id){links.forEach(function(a){a.setAttribute('aria-current', a.getAttribute('href')==='#'+id ? 'true':'false')})}
+  if('IntersectionObserver' in window){
+    var visible={};
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){visible[e.target.id]=e.isIntersecting});
+      var first=ids.filter(function(id){return visible[id]})[0];
+      if(first) setCurrent(first);
+    },{rootMargin:'-20% 0px -65% 0px'});
+    els.forEach(function(el){io.observe(el)});
+  }
+})();
+</script>
+</body>
+</html>
